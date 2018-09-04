@@ -186,11 +186,19 @@ function writeAppearanceXObjectForText(
     });
   }
 
+  let xPad = (yPad = wPad = hPad = 0);
+  if (_.get(handles, "options.xObjectForm")) {
+    const xObjectFormOptions = handles.options.xObjectForm;
+    if (xObjectFormOptions.xPad) xPad = xObjectFormOptions.xPad;
+    if (xObjectFormOptions.yPad) yPad = xObjectFormOptions.yPad;
+    if (xObjectFormOptions.wPad) wPad = xObjectFormOptions.wPad;
+    if (xObjectFormOptions.hPad) hPad = xObjectFormOptions.hPad;
+  }
   var xobjectForm = handles.writer.createFormXObject(
-    0,
-    0,
-    rect[2].value - rect[0].value,
-    rect[3].value - rect[1].value,
+    0 + xPad,
+    0 + yPad,
+    rect[2].value - rect[0].value + wPad,
+    rect[3].value - rect[1].value + hPad,
     formId
   );
 
